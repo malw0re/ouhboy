@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ACL AD | Malw0re</title><meta name="author" content="Malw0re"><meta name="copyright" content="Malw0re"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Access Control List">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ACL AD">
+<meta property="og:url" content="https://malw0re.github.io/malwore.github.io/2024/01/04/acls/index.html">
+<meta property="og:site_name" content="Malw0re">
+<meta property="og:description" content="Access Control List">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://malw0re.github.io/malwore.github.io/images/qwe.png">
+<meta property="article:published_time" content="2024-01-03T21:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-03T14:55:37.996Z">
+<meta property="article:author" content="Malw0re">
+<meta property="article:tag" content="Active-Directory">
+<meta property="article:tag" content="access control list">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://malw0re.github.io/malwore.github.io/images/qwe.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ACL AD",
+  "url": "https://malw0re.github.io/malwore.github.io/2024/01/04/acls/",
+  "image": "https://malw0re.github.io/malwore.github.io/images/qwe.png",
+  "datePublished": "2024-01-03T21:00:00.000Z",
+  "dateModified": "2024-11-03T14:55:37.996Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Malw0re",
+      "url": "https://malw0re.github.io/malwore.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/malwore.github.io/img/favicon.png"><link rel="canonical" href="https://malw0re.github.io/malwore.github.io/2024/01/04/acls/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/malwore.github.io/css/index.css?v=5.5.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.0.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/malwore.github.io/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ACL AD',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/malwore.github.io/images/qwe.png" onerror="this.onerror=null;this.src='/malwore.github.io/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/malwore.github.io/archives/"><div class="headline">Articles</div><div class="length-num">17</div></a><a href="/malwore.github.io/tags/"><div class="headline">Tags</div><div class="length-num">13</div></a><a href="/malwore.github.io/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/malwore.github.io/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/malwore.github.io/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/malwore.github.io/categories/writeups/"><i class="fa-fw fas fa-folder-open"></i><span> Writeups</span></a></div><div class="menus_item"><a class="site-page" href="/malwore.github.io/categories/research/"><i class="fa-fw fas fa-folder-open"></i><span> Research</span></a></div><div class="menus_item"><a class="site-page" href="/malwore.github.io/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/malwore.github.io/"><span class="site-name">Malw0re</span></a><a class="nav-page-title" href="/malwore.github.io/"><span class="site-name">ACL AD</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/malwore.github.io/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/malwore.github.io/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/malwore.github.io/categories/writeups/"><i class="fa-fw fas fa-folder-open"></i><span> Writeups</span></a></div><div class="menus_item"><a class="site-page" href="/malwore.github.io/categories/research/"><i class="fa-fw fas fa-folder-open"></i><span> Research</span></a></div><div class="menus_item"><a class="site-page" href="/malwore.github.io/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">ACL AD</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-01-03T21:00:00.000Z" title="Created 2024-01-04 00:00:00">2024-01-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-03T14:55:37.996Z" title="Updated 2024-11-03 17:55:37">2024-11-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="Access-Control-List-ACL-Abuse-Primer"><a href="#Access-Control-List-ACL-Abuse-Primer" class="headerlink" title="Access Control List (ACL) Abuse Primer"></a>Access Control List (ACL) Abuse Primer</h2><p>For security reasons, not all users and computers in an AD environment can access all objects and files. These types of permissions are controlled through Access Control Lists (ACLs). Posing a serious threat to the security posture of the domain, a slight misconfiguration to an ACL can leak permissions to other objects that do not need it.</p>
+<h2 id="Access-Control-List-ACL-Overview"><a href="#Access-Control-List-ACL-Overview" class="headerlink" title="Access Control List (ACL) Overview"></a>Access Control List (ACL) Overview</h2><p>In their simplest form, ACLs are lists that define a) who has access to which asset&#x2F;resource and b) the level of access they are provisioned. The settings themselves in an ACL are called Access Control Entries (ACEs). Each ACE maps back to a user, group, or process (also known as security principals) and defines the rights granted to that principal. Every object has an ACL, but can have multiple ACEs because multiple security principals can access objects in AD. ACLs can also be used for auditing access within AD.</p>
+<h3 id="There-are-two-types-of-ACLs"><a href="#There-are-two-types-of-ACLs" class="headerlink" title="There are two types of ACLs:"></a>There are two types of ACLs:</h3><ul>
+<li><p>Discretionary Access Control List (DACL) - defines which security principals are granted or denied access to an object. DACLs are made up of ACEs that either allow or deny access. When someone attempts to access an object, the system will check the DACL for the level of access that is permitted. If a DACL does not exist for an object, all who attempt to access the object are granted full rights. If a DACL exists, but does not have any ACE entries specifying specific security settings, the system will deny access to all users, groups, or processes attempting to access it.</p>
+</li>
+<li><p>System Access Control Lists (SACL) - allow administrators to log access attempts made to secured objects.</p>
+</li>
+</ul>
+<p>We see the ACL for the user account forend in the image below. Each item under Permission entries makes up the DACL for the user account, while the individual entries (such as Full Control or Change Password) are ACE entries showing rights granted over this user object to various users and groups.</p>
+<p>Viewing forend’s ACL</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/143/DACL_example.png"><br>The SACLs can be seen within the Auditing tab.</p>
+<p>Viewing the SACLs through the Auditing Tab</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/143/SACL_example.png"></p>
+<h2 id="Access-Control-Entries-ACEs"><a href="#Access-Control-Entries-ACEs" class="headerlink" title="Access Control Entries (ACEs)"></a>Access Control Entries (ACEs)</h2><p>As stated previously, Access Control Lists (ACLs) contain ACE entries that name a user or group and the level of access they have over a given securable object. There are three main types of ACEs that can be applied to all securable objects in AD:</p>
+<p>ACE	Description</p>
+<ul>
+<li>Access denied ACE -	Used within a DACL to show that a user or group is explicitly denied access to an object</li>
+<li>Access allowed ACE - Used within a DACL to show that a user or group is explicitly granted access to an object</li>
+<li>System audit ACE - Used within a SACL to generate audit logs when a user or group attempts to access an object. It records whether access was granted or not and what type of access occurred</li>
+</ul>
+<p>Each ACE is made up of the following four components:</p>
+<p>The <em>security identifier (SID)</em> of the user&#x2F;group that has access to the object (or principal name graphically)<br>A flag denoting the type of ACE (access denied, allowed, or system audit ACE)<br>A set of flags that specify whether or not child containers&#x2F;objects can inherit the given ACE entry from the primary or parent object<br>An access mask which is a 32-bit value that defines the rights granted to an object<br>We can view this graphically in Active Directory Users and Computers (ADUC). In the example image below, we can see the following for the ACE entry for the user forend:</p>
+<h2 id="Viewing-Permissions-through-Active-Directory-Users-Computers"><a href="#Viewing-Permissions-through-Active-Directory-Users-Computers" class="headerlink" title="Viewing Permissions through Active Directory Users &amp; Computers"></a>Viewing Permissions through Active Directory Users &amp; Computers</h2><p><img src="https://academy.hackthebox.com/storage/modules/143/ACE_example.png"></p>
+<ol>
+<li>The security principal is Angela Dunn (<a href="mailto:&#x61;&#x64;&#x75;&#110;&#x6e;&#64;&#105;&#x6e;&#108;&#97;&#110;&#x65;&#x66;&#114;&#x65;&#105;&#103;&#104;&#116;&#x2e;&#108;&#111;&#x63;&#x61;&#x6c;">adunn@inlanefreight.local</a>)</li>
+<li>The ACE type is Allow</li>
+<li>Inheritance applies to the “This object and all descendant objects,” meaning any child objects of the forend object would have the same permissions granted</li>
+<li>The rights granted to the object, again shown graphically in this example</li>
+</ol>
+<p>When access control lists are checked to determine permissions, they are checked from top to bottom until an access denied is found in the list.</p>
+<h2 id="Why-are-ACEs-Important"><a href="#Why-are-ACEs-Important" class="headerlink" title="Why are ACEs Important?"></a>Why are ACEs Important?</h2><p>Attackers utilize ACE entries to either further access or establish persistence. These can be great for us as penetration testers as many organizations are unaware of the ACEs applied to each object or the impact that these can have if applied incorrectly. They cannot be detected by vulnerability scanning tools, and often go unchecked for many years, especially in large and complex environments. During an assessment where the client has taken care of all of the “low hanging fruit” AD flaws&#x2F;misconfigurations, ACL abuse can be a great way for us to move laterally&#x2F;vertically and even achieve full domain compromise. Some example Active Directory object security permissions are as follows. These can be enumerated (and visualized) using a tool such as BloodHound, and are all abusable with PowerView, among other tools:</p>
+<ul>
+<li>ForceChangePassword abused with Set-DomainUserPassword</li>
+<li>Add Members abused with Add-DomainGroupMember</li>
+<li>GenericAll abused with Set-DomainUserPassword or Add-DomainGroupMember</li>
+<li>GenericWrite abused with Set-DomainObject</li>
+<li>WriteOwner abused with Set-DomainObjectOwner</li>
+<li>WriteDACL abused with Add-DomainObjectACL</li>
+<li>AllExtendedRights abused with Set-DomainUserPassword or Add-DomainGroupMember</li>
+<li>Addself abused with Add-DomainGroupMember</li>
+</ul>
+<h3 id="enumerating-and-leveraging-four-specific-ACEs-to-highlight-the-power-of-ACL-attacks"><a href="#enumerating-and-leveraging-four-specific-ACEs-to-highlight-the-power-of-ACL-attacks" class="headerlink" title="enumerating and leveraging four specific ACEs to highlight the power of ACL attacks:"></a>enumerating and leveraging four specific ACEs to highlight the power of ACL attacks:</h3><ul>
+<li>ForceChangePassword - gives us the right to reset a user’s password without first knowing their password (should be used cautiously and typically best to consult our client before resetting passwords).</li>
+<li>GenericWrite - gives us the right to write to any non-protected attribute on an object. If we have this access over a user, we could assign them an SPN and perform a Kerberoasting attack (which relies on the target account having a weak password set). Over a group means we could add ourselves or another security principal to a given group. Finally, if we have this access over a computer object, we could perform a resource-based constrained delegation attack which is outside the scope of this module.</li>
+<li>AddSelf - shows security groups that a user can add themselves to.</li>
+<li>GenericAll - this grants us full control over a target object. Again, depending on if this is granted over a user or group, we could modify group membership, force change a password, or perform a targeted Kerberoasting attack. If we have this access over a computer object and the <em>Local Administrator Password Solution (LAPS)</em> is in use in the environment, we can read the LAPS password and gain local admin access to the machine which may aid us in lateral movement or privilege escalation in the domain if we can obtain privileged controls or gain some sort of privileged access.</li>
+</ul>
+<p>This graphic, adapted from a graphic created by Charlie Bromberg (Shutdown), shows an excellent breakdown of the varying possible ACE attacks and the tools to perform these attacks from both Windows and Linux (if applicable). In the following few sections, we will mainly cover enumerating and performing these attacks from a Windows attack host with mentions of how these attacks could be performed from Linux. A later module specifically on ACL Attacks will go much further in-depth on each of the attacks listed in this graphic and how to perform them from Windows and Linux.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/143/ACL_attacks_graphic.png"></p>
+<p>We will run into many other interesting ACEs (privileges) in Active Directory from time to time. The methodology for enumerating possible ACL attacks using tools such as BloodHound and PowerView and even built-in AD management tools should be adaptable enough to assist us whenever we encounter new privileges in the wild that we may not yet be familiar with. For example, we may import data into BloodHound and see that a user we have control over (or can potentially take over) has the rights to read the password for a Group Managed Service Account (gMSA) through the ReadGMSAPassword edge. In this case, there are tools such as GMSAPasswordReader that we could use, along with other methods, to obtain the password for the service account in question. Other times we may come across extended rights such as Unexpire-Password or Reanimate-Tombstones using PowerView and have to do a bit of research to figure out how to exploit these for our benefit. It’s worth familiarizing yourself with all of the BloodHound edges and as many Active Directory Extended Rights as possible as you never know when you may encounter a less common one during an assessment.</p>
+<h2 id="ACL-Attacks-in-the-Wild"><a href="#ACL-Attacks-in-the-Wild" class="headerlink" title="ACL Attacks in the Wild"></a>ACL Attacks in the Wild</h2><p>We can use ACL attacks for:</p>
+<ul>
+<li>Lateral movement</li>
+<li>Privilege escalation</li>
+<li>Persistence</li>
+</ul>
+<p>Some common attack scenarios may include:</p>
+<h3 id="Attack-Description"><a href="#Attack-Description" class="headerlink" title="Attack Description"></a>Attack Description</h3><table>
+<thead>
+<tr>
+<th>Attack</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Abusing forgot password permissions</td>
+<td>Help Desk and other IT users are often granted permissions to perform password resets and other privileged tasks. If we can take over an account with these privileges (or an account in a group that confers these privileges on its users), we may be able to perform a password reset for a more privileged account in the domain.</td>
+</tr>
+<tr>
+<td>Abusing group membership management</td>
+<td>It’s also common to see Help Desk and other staff that have the right to add&#x2F;remove users from a given group. It is always worth enumerating this further, as sometimes we may be able to add an account that we control into a privileged built-in AD group or a group that grants us some sort of interesting privilege.</td>
+</tr>
+<tr>
+<td>Excessive user rights</td>
+<td>We also commonly see user, computer, and group objects with excessive rights that a client is likely unaware of. This could occur after some sort of software install (Exchange, for example, adds many ACL changes into the environment at install time) or some kind of legacy or accidental configuration that gives a user unintended rights. Sometimes we may take over an account that was given certain rights out of convenience or to solve a nagging problem more quickly.</td>
+</tr>
+</tbody></table>
+<p>Note: Some ACL attacks can be considered “destructive,” such as changing a user’s password or performing other modifications within a client’s AD domain. If in doubt, it’s always best to run a given attack by our client before performing it to have written documentation of their approval in case an issue arises. We should always carefully document our attacks from start to finish and revert any changes. This data should be included in our report, but we should also highlight any changes we make clearly so that the client can go back and verify that our changes were indeed reverted properly.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://malw0re.github.io/malwore.github.io">Malw0re</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://malw0re.github.io/malwore.github.io/2024/01/04/acls/">https://malw0re.github.io/malwore.github.io/2024/01/04/acls/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/malwore.github.io/tags/Active-Directory/">Active-Directory</a><a class="post-meta__tags" href="/malwore.github.io/tags/access-control-list/">access control list</a></div><div class="post-share"><div class="social-share" data-image="/malwore.github.io/images/qwe.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/malwore.github.io/2023/11/29/stealth/" title="stealth"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">stealth</div></div><div class="info-2"><div class="info-item-1">stealth tryhackmeroom nmap scans123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111PORT      STATE SERVICE       REASON  VERSION139/tcp   open  netbios-ssn   syn-ack Microsoft Windows netbios-ssn445/tcp   open  microsoft-ds? syn-ack3389/tcp  open  ms-wbt-server syn-ack Microsoft Terminal Services|_ssl-date: 2023-11-30T18:...</div></div></div></a><a class="pagination-related" href="/malwore.github.io/2024/01/20/easyCTF/" title="Simple CTF"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Simple CTF</div></div><div class="info-2"><div class="info-item-1">Hi guys, welcome back to another Tryhackme room starting off the year with. </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/malwore.github.io/2023/08/09/ad-credential-enumeration/" title="AD CRED ENUM"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-09</div><div class="info-item-2">AD CRED ENUM</div></div><div class="info-2"><div class="info-item-1"> Credential EnumerationAfter acquiring a foothold, you must dig deeper using the low-privilege domain user credentials. Information to be interested in when enumerating:  Domain users Computer Attributes group membership Group Policy Objects Permissions ACLs Trusts  but not limited to the above, but the most important thing to remember is that most of these tools will not work without domain users’ credentials at any permission level. So at a minimum, you need to have acquired a user’s cleart...</div></div></div></a><a class="pagination-related" href="/malwore.github.io/2023/07/13/kerberos-101/" title="Kerberos"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-13</div><div class="info-item-2">Kerberos</div></div><div class="info-2"><div class="info-item-1"> KerberoastingThe Kerberos protocol defines how clients interact with a network authentication service, clients obtain tickets from the Kerberos Key Distribution Center (KDC) and they submit these tickets to application servers when connections are established. uses port 88 by default and depends on the process of symmetric key cryptography. NB [kerberos uses tickets to authenticate a user and completely avoids sending passwords across the network]  How Kerb Auth works!In every Active Directo...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/malwore.github.io/images/qwe.png" onerror="this.onerror=null;this.src='/malwore.github.io/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Malw0re</div><div class="author-info-description"></div><div class="site-data"><a href="/malwore.github.io/archives/"><div class="headline">Articles</div><div class="length-num">17</div></a><a href="/malwore.github.io/tags/"><div class="headline">Tags</div><div class="length-num">13</div></a><a href="/malwore.github.io/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/malw0re/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/malw0re/" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://www.linkedin.com/in/brian-karanja-21331b164/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://www.x.com/M4LW0R3" target="_blank" title="twitter"><i class="fab fa-twitter" style="color: #cd486b;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my blog  where I post my writeups from Boxes & CTFs along with exploit research!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Access-Control-List-ACL-Abuse-Primer"><span class="toc-number">1.</span> <span class="toc-text">Access Control List (ACL) Abuse Primer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Access-Control-List-ACL-Overview"><span class="toc-number">2.</span> <span class="toc-text">Access Control List (ACL) Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#There-are-two-types-of-ACLs"><span class="toc-number">2.1.</span> <span class="toc-text">There are two types of ACLs:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Access-Control-Entries-ACEs"><span class="toc-number">3.</span> <span class="toc-text">Access Control Entries (ACEs)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Viewing-Permissions-through-Active-Directory-Users-Computers"><span class="toc-number">4.</span> <span class="toc-text">Viewing Permissions through Active Directory Users &amp; Computers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-are-ACEs-Important"><span class="toc-number">5.</span> <span class="toc-text">Why are ACEs Important?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#enumerating-and-leveraging-four-specific-ACEs-to-highlight-the-power-of-ACL-attacks"><span class="toc-number">5.1.</span> <span class="toc-text">enumerating and leveraging four specific ACEs to highlight the power of ACL attacks:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACL-Attacks-in-the-Wild"><span class="toc-number">6.</span> <span class="toc-text">ACL Attacks in the Wild</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack-Description"><span class="toc-number">6.1.</span> <span class="toc-text">Attack Description</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/malwore.github.io/2025/09/14/hello-world/" title="Some Research">Some Research</a><time datetime="2025-09-13T21:00:00.000Z" title="Created 2025-09-14 00:00:00">2025-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/malwore.github.io/2025/09/14/hello/" title="HTB Machine - SomeMachine">HTB Machine - SomeMachine</a><time datetime="2025-09-13T21:00:00.000Z" title="Created 2025-09-14 00:00:00">2025-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/malwore.github.io/2025/05/15/DSyncAttack/" title="DSyncAttack">DSyncAttack</a><time datetime="2025-05-15T19:51:49.000Z" title="Created 2025-05-15 22:51:49">2025-05-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/malwore.github.io/2025/02/02/wiriteup-test/" title="test post">test post</a><time datetime="2025-02-02T17:13:16.000Z" title="Created 2025-02-02 20:13:16">2025-02-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/malwore.github.io/2025/02/02/home/" title="hello.md">hello.md</a><time datetime="2025-02-02T17:11:22.000Z" title="Created 2025-02-02 20:11:22">2025-02-02</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Malw0re</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/malwore.github.io/js/utils.js?v=5.5.0"></script><script src="/malwore.github.io/js/main.js?v=5.5.0"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-show-text.min.js" data-mobile="false" data-text="getsystem,ntsystem,sudo rm -rf,root,administrator,ctfs,sliver,cobalt strike,python,c#,malw0re,empire,( ͡° ͜ʖ ͡°)" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
