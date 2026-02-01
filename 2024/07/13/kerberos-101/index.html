@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Kerberos | ouhboy</title><meta name="author" content="malw0re"><meta name="copyright" content="malw0re"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Active Directory kerberos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kerberos">
+<meta property="og:url" content="https://malw0re.github.io/ouhboy/2024/07/13/kerberos-101/index.html">
+<meta property="og:site_name" content="ouhboy">
+<meta property="og:description" content="Active Directory kerberos">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://malw0re.github.io/ouhboy/images/kerb.webp">
+<meta property="article:published_time" content="2024-07-12T21:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-01T00:16:37.097Z">
+<meta property="article:author" content="malw0re">
+<meta property="article:tag" content="Active-Directory">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://malw0re.github.io/ouhboy/images/kerb.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kerberos",
+  "url": "https://malw0re.github.io/ouhboy/2024/07/13/kerberos-101/",
+  "image": "https://malw0re.github.io/ouhboy/images/kerb.webp",
+  "datePublished": "2024-07-12T21:00:00.000Z",
+  "dateModified": "2026-02-01T00:16:37.097Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "malw0re",
+      "url": "https://malw0re.github.io/ouhboy"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/ouhboy/img/favicon.png"><link rel="canonical" href="https://malw0re.github.io/ouhboy/2024/07/13/kerberos-101/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/ouhboy/css/index.css?v=5.5.3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/ouhboy/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Kerberos',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/ouhboy/images/cyber.png" onerror="this.onerror=null;this.src='/ouhboy/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/ouhboy/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/ouhboy/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/ouhboy/categories/"><div class="headline">Categories</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/ouhboy/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/categories/writeups/"><i class="fa-fw fas fa-archive"></i><span> Writeups</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/categories/research/"><i class="fa-fw fas fa-flask"></i><span> Research</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/ouhboy/images/cyberpunk-red.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/ouhboy/"><span class="site-name">ouhboy</span></a><a class="nav-page-title" href="/ouhboy/"><span class="site-name">Kerberos</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/ouhboy/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/categories/writeups/"><i class="fa-fw fas fa-archive"></i><span> Writeups</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/categories/research/"><i class="fa-fw fas fa-flask"></i><span> Research</span></a></div><div class="menus_item"><a class="site-page" href="/ouhboy/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Kerberos</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-07-12T21:00:00.000Z" title="Created 2024-07-13 00:00:00">2024-07-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-02-01T00:16:37.097Z" title="Updated 2026-02-01 03:16:37">2026-02-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/ouhboy/categories/writeups/">writeups</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="Kerberoasting"><a href="#Kerberoasting" class="headerlink" title="Kerberoasting"></a>Kerberoasting</h2><p>The Kerberos protocol defines how clients interact with a network authentication service, clients obtain tickets from the Kerberos Key Distribution Center (KDC) and they submit these tickets to application servers when connections are established. uses port 88 by default and depends on the process of symmetric key cryptography.</p>
+<p><em>NB</em> [<strong>kerberos uses tickets to authenticate a user and completely avoids sending passwords across the network</strong>]</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*J6UHDf5fnbzdKTPawNq3UA.png"></p>
+<h3 id="How-Kerb-Auth-works"><a href="#How-Kerb-Auth-works" class="headerlink" title="How Kerb Auth works!"></a>How Kerb Auth works!</h3><p>In every Active Directory domain, every domain controller runs a KDC service that provides requests for tickets to kerberos, which is the KRBTGT account in the AD domain.</p>
+<p><img src="https://1.bp.blogspot.com/-XHZj0n9oH_g/XrHWMs_s-uI/AAAAAAAAj2E/oxSrDD2wvOEMv-a-nTHhQD2jc-3KMULYgCLcBGAsYHQ/s1600/1.png" alt="1.webp"></p>
+<p>Kerberos uses symmetric cryptography for encryption and decryption.</p>
+<p>For explanation purposes, we use three colours to distinguish Hashes:</p>
+<ul>
+<li><strong>BLUE _KEY</strong>: User NTLM HASH</li>
+<li><strong>YELLOW_KEY</strong>: Krbtgt NTLM HASH</li>
+<li><strong>RED_KEY:</strong> Service NTLM HASH</li>
+</ul>
+<p><strong>Step 1:</strong> By sending the request message to KDC, the client initializes communication as:</p>
+<p><em><strong>KRB_AS_REQ contains the following:</strong></em></p>
+<ul>
+<li>The username of the client is to be authenticated.</li>
+<li><em>The service <strong>SPN (SERVICE PRINCIPAL NAME)</strong> linked with the Krbtgt account</em></li>
+<li><em>An encrypted timestamp (Locked with User Hash: Blue Key)</em></li>
+</ul>
+<p>The entire message is encrypted using the User NTLM hash (<strong>Locked with BLUE KEY</strong>) to authenticate the user and prevent replay attacks.</p>
+<p><strong>Step 2:</strong> The KDC uses a database consisting of Users&#x2F;Krbtgt&#x2F;Services hashes to decrypt a message (<strong>Unlock with BLUE KEY</strong>) that authenticates user identification.</p>
+<p>Then KDC will generate TGT (Ticket Granting Ticket) for a client that is encrypted using Krbtgt hash (Locked with Yellow Key) &amp; some Encrypted Message using User Hash.</p>
+<p><em><strong>KRB_AS_REP contains the following:</strong></em></p>
+<ul>
+<li><em><strong>Username</strong></em></li>
+<li><em>Some encrypted data, (Locked with User Hash: Blue Key) that contains:</em></li>
+<li><em>Session key</em></li>
+<li><em>The expiration date of TGT</em></li>
+<li><em><strong>TGT</strong></em>, (Locked with Krbtgt Hash: Yellow Key) which contains:</li>
+<li><em>Username</em></li>
+<li><em>Session key</em></li>
+<li><em>The expiration date of TGT</em></li>
+<li><em>PAC with user privileges, signed by KDC</em></li>
+</ul>
+<p><img src="https://i0.wp.com/blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj8cs4DxTHhCqS9yUAa3yOwC8e3ElB50XZ4QyOkWXIEAGssMdjBPNsGVaDz274Z8voKtHNoBHD9qD6PKPvp9KLzdxjUzRtSc_UQ7Jz03v5BHEwhP7wm09K-81SGcv3qTyJ1UDyctCHyDc_PgLZbe4A5GipaqZmDU649RWcNbQtIpM6o6DvKicqXTU5vQA/s16000/2.png?w=640&ssl=1"></p>
+<p><strong>Step 3:</strong> The KRB_TGT will be stored in the Kerberos tray (Memory) of the client machine, as the user already has the KRB_TGT, which is used to identify himself for the TGS request. The client sent a copy of the TGT with the encrypted data to KDC.</p>
+<p><em><strong>KRB_TGS_REQ</strong></em> contains:</p>
+<ul>
+<li><em>Encrypted data with the session key</em></li>
+<li><em>Username</em></li>
+<li><em>Timestamp</em></li>
+<li><em>TGT</em></li>
+<li><em>SPN of requested service e.g. SQL service</em></li>
+</ul>
+<p><strong>Step 4:</strong> The KDC receives the KRB_TGS_REQ message and decrypts the message using Krbtgt hash to verify TGT (Unlock using Yellow key), then KDC returns a TGS as KRB_TGS_REP which is encrypted using requested service hash <strong>(Locked with Red Key)</strong> &amp; Some Encrypted Message using User Hash.</p>
+<p><em><strong>KRB_TGS_REP contains:</strong></em></p>
+<ul>
+<li><em>Username</em></li>
+<li><em>Encrypted data with the session key:</em></li>
+<li><em>Service session key</em></li>
+<li><em>The expiration date of TGS</em></li>
+<li><em><strong>TGS</strong></em>, (Service Hash: RED Key) which contains:</li>
+<li><em>Service session key</em></li>
+<li><em>Username</em></li>
+<li><em>The expiration date of TGS</em></li>
+<li><em>PAC with user privileges, signed by KDC</em></li>
+</ul>
+<p><img src="https://i0.wp.com/blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEljfKE_fFEoR8kThrILtnjmFwQPfM61p-SZh6Xg64sLUv7GzLgsvk6Ni5YhC8A7ILETnBFHbsa2ldkL6u1mrWGkDStzkFSP9oCeg3cO_9QxjyltM0ZpKm5Jf2oV8lo-IsfR2C7-jAAaRyWTu_Sofn4TV7BhIl0fj5fYPIicSjbScOtyUql25EmTo-Tw/s16000/3.png?w=640&ssl=1"></p>
+<p><strong>Step 5:</strong> The user sends the copy of TGS to the Application Server,</p>
+<p><em><strong>KRB_AP_REQ contains:</strong></em></p>
+<ul>
+<li><em>TGS</em></li>
+<li><em>Encrypted data with the service session key:</em></li>
+<li><em>Username</em></li>
+<li><em>Timestamp, to avoid replay attacks</em></li>
+</ul>
+<p><strong>Step 6:</strong> The application attempts to decrypt the message using its NTLM hash and to verify the PAC from KDC to identify user Privilege which is an optional case.</p>
+<p><strong>Step 7:</strong> KDC verifies PAC (Optional)</p>
+<p><strong>Step 8:</strong> Allow the user to access the service for a specific time.</p>
+<h2 id="SPNs"><a href="#SPNs" class="headerlink" title="SPNs"></a>SPNs</h2><p>The Service Principal Name (SPN) is a unique identifier for a service instance. Active Directory Domain Services and Windows provide support for Service Principal Names (SPNs), which are key components of the Kerberos mechanism through which a client authenticates a service.</p>
+<p><strong>Important Points</strong></p>
+<ul>
+<li>If you install multiple instances of a service on computers throughout a forest, each instance must have its SPN.</li>
+<li>Before the Kerberos authentication service can use an SPN to authenticate a service, the SPN must be registered on the account.</li>
+<li>A given SPN can be registered on only one account.</li>
+<li>An SPN must be unique in the forest in which it is registered.</li>
+<li>If it is not unique, authentication will fail.</li>
+</ul>
+<h3 id="SPNS-syntax"><a href="#SPNS-syntax" class="headerlink" title="SPNS syntax"></a>SPNS syntax</h3><p><strong>The SPN syntax has four elements</strong></p>
+<p><img src="https://i0.wp.com/blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5w4iPbIsIxS5VNUzD13_nOXg-0AbmhtwdJWBUqi4keSFbajcnh5Bgqro7FOj686VwDTBbtu0oYjZbBGRyRWxUHy8EAJp8jmUQpDBymwTWzE_9RIpwOkK2Ul6bxIbDZSwHYhknzECBwjBEd4VU5HyMeCciosGRPfcjbaN62fLe6WPiArdLqlHrpGMKOQ/s16000/5.png?w=640&ssl=1"></p>
+<h3 id="Type-of-SPN"><a href="#Type-of-SPN" class="headerlink" title="Type of SPN"></a>Type of SPN</h3><ul>
+<li>Host-based SPNs which is associated with the computer account in AD, it is randomly generated 128-character long password which is changed every 30 days; hence it is no use in Kerberoasting attacks</li>
+<li>SPNs that have been associated with a domain user account where NTLM hash will be used.</li>
+</ul>
+<h3 id="Linux-Perspective"><a href="#Linux-Perspective" class="headerlink" title="Linux Perspective"></a>Linux Perspective</h3><h4 id="Attack-Procedure"><a href="#Attack-Procedure" class="headerlink" title="Attack Procedure."></a>Attack Procedure.</h4><p>Depending on your positioning a network, Kerberos attacks can be performed in multiple ways.</p>
+<ul>
+<li>From a non-domain joined Linux host using valid domain user credentials.</li>
+<li>From a domain-joined Linux host as root after retrieving the keytab file.</li>
+<li>From a domain-joined Windows, the host is authenticated as a domain user.</li>
+<li>From a domain-joined Windows host with a shell in the context of a domain account.</li>
+<li>As SYSTEM on a domain-joined Windows host.</li>
+<li>From a non-domain joined Windows host using <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc771525(v=ws.11)">runas</a> &#x2F;netonly.</li>
+</ul>
+<h4 id="Tools"><a href="#Tools" class="headerlink" title="Tools."></a>Tools.</h4><p>Some tools can be utilized to perform the attack.</p>
+<ul>
+<li>Impacket’s <a target="_blank" rel="noopener" href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetUserSPNs.py">GetUserSPNs.py</a> from a non-domain joined Linux host.</li>
+<li>A combination of the built-in setspn.exe Windows binary, PowerShell, and Mimikatz.</li>
+<li>From Windows, utilizing tools such as PowerView, <a target="_blank" rel="noopener" href="https://github.com/GhostPack/Rubeus">Rubeus</a>, and other PowerShell scripts.</li>
+</ul>
+<p><strong>REMEMBER!!!</strong></p>
+<p>Obtaining a TGS ticket via kerberoasting does not guarantee a set of valid credentials and the ticket still must be cracked offline to obtain the cleartext password.</p>
+<p>TGS tickets generally take longer to crack than other formats such as NTLM hashes, so often, unless a weak password is set, it can be difficult or impossible to obtain the cleartext using s standard cracking rig.</p>
+<h4 id="The-efficiency-of-Attack"><a href="#The-efficiency-of-Attack" class="headerlink" title="The efficiency of Attack"></a>The efficiency of Attack</h4><p>While it can be a great way to move lateral or escalate privileges in a domain kerberoasting and the presence of SPNs does not guarantee us any level of access.</p>
+<p>We might be in an environment where we crack a TGS ticket and obtain Domain Admin access straightway or obtain credentials that help us move down the path to domain compromise. Other times we may perform the attack and retrieve many TGS tickets, some of which we can crack, but none of the ones that crack are for privileged users, and the attack does not gain us any additional access.</p>
+<p><strong>N&#x2F;B -</strong> When writing a report this finding is termed as high-risk in the first two cases. Third case we may Kerberos and end up unable to crack a single TGS ticket even after mad days of cracking attempts with Hashcat. This would be dropped as a medium-risk issue to make the client aware of the risk of SPNs in the domain.</p>
+<p><strong>REMEMBER!!!</strong></p>
+<p>A prerequisite to performing Kerberoasting attacks is either domain user credentials (cleartext or just an NTLM hash if using Impacket), a shell in the context of a domain user, or account such as SYSTEM. Once we have this level of access, we can start. We must also know which host in the domain is a Domain Controller so we can query it.</p>
+<h4 id="GetUserSPNs-py"><a href="#GetUserSPNs-py" class="headerlink" title="GetUserSPNs.py"></a>GetUserSPNs.py</h4><p><strong>Listing SPN Accounts.</strong></p>
+<p><code>GetUserSPNs.py -dc-ip 172.16.5.5 INLANEFREIGHT.LOCAL/forend</code></p>
+<h4 id="Requesting-all-TGS-tickets"><a href="#Requesting-all-TGS-tickets" class="headerlink" title="Requesting all TGS tickets.**"></a>Requesting all TGS tickets.**</h4><p>Later on, we can pull all TGS tickets for offline processing using the <strong>-request</strong> flag. The TGS tickets will be output in a format that can be readily provided to Hashcat or Johnny for offline password-cracking attempts.</p>
+<p><code>GetUserSPNs.py -dc-ip 172.16.5.5 INLANEFREIGHT.LOCAL/forend -request</code></p>
+<h4 id="Requesting-a-Single-TGS-Ticket"><a href="#Requesting-a-Single-TGS-Ticket" class="headerlink" title="Requesting a Single TGS Ticket."></a>Requesting a Single TGS Ticket.</h4><p>Wte can also be more targeted and request just the TGS ticket for a specific account. Let’s try requesting one for just the required account.</p>
+<p><code>GetUserSPNs.py -dc-ip 172.16.5.5 INLANEFREIGHT.LOCAL/forend -request-user</code></p>
+<p>With this ticket in hand, we could attempt, to crack the password offline, if successful we may end up with Domain Admin Rights.</p>
+<p>Saving the Ticket o facilitate offline cracking, it is always good to use the <code>-outputfile</code> flag to write the TGS tickets to a file that can then be run using Hashcat on our attack system or moved to a GPU cracking rig.</p>
+<p><code>GetUserSPNs.py -dc-ip 172.16.5.5 INLANEFREIGHT.LOCAL/forend -request-user sqldev -outputfile sqldev_tgs</code></p>
+<h3 id="Windows-Perspective"><a href="#Windows-Perspective" class="headerlink" title="Windows Perspective"></a>Windows Perspective</h3><p>Kerberoasting - Semi-Manual Method.</p>
+<h4 id="Enumerating-SPNs-with-setspn-exe"><a href="#Enumerating-SPNs-with-setspn-exe" class="headerlink" title="Enumerating SPNs with setspn.exe"></a>Enumerating SPNs with setspn.exe</h4><p><code>setspn.exe -Q */*</code> running the command you’ll notice many different SPNs returned for the various hosts in the domain.</p>
+<h4 id="Retrieving-All-Tickets-using-setspn-exe"><a href="#Retrieving-All-Tickets-using-setspn-exe" class="headerlink" title="Retrieving All Tickets using setspn.exe"></a>Retrieving All Tickets using setspn.exe</h4><p><code>setspn.exe -T INLANEFREIGHT.LOCAL -Q */* | Select-String &#39;^CN&#39; -Context 0,1 | % { New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList $_.Context.PostContext[0].Trim() }</code></p>
+<p>The above command combines the previous command with <code>setspn.exe</code> to request tickets for all accounts with SPNs set.</p>
+<p>Using <strong>Powershell</strong> we can request TGS tickets for an account in the shell and load them into memory, once they are loaded into memory we can extract them using <strong>Mimkatz.</strong></p>
+<h4 id="Targeting-a-Single-User"><a href="#Targeting-a-Single-User" class="headerlink" title="Targeting a Single User**************"></a>Targeting a Single User**************</h4><pre><code class="language-powershell">PS C:\htb&gt; Add-Type -AssemblyName System.IdentityModel
+PS C:\htb&gt; New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList &quot;MSSQLSvc/DEV-PRE-SQL.inlanefreight.local:1433&quot;
+</code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://malw0re.github.io/ouhboy">malw0re</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://malw0re.github.io/ouhboy/2024/07/13/kerberos-101/">https://malw0re.github.io/ouhboy/2024/07/13/kerberos-101/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/ouhboy/tags/Active-Directory/">Active-Directory</a></div><div class="post-share"><div class="social-share" data-image="/ouhboy/images/kerb.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/ouhboy/2024/01/04/acls/" title="ACL AD"><img class="cover" src="/ouhboy/images/access.jpg" onerror="onerror=null;src='/ouhboy/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">ACL AD</div></div><div class="info-2"><div class="info-item-1">Active Directory ACLsAccess Control Lists (ACLs) define the permissions for objects within Active Directory. Key Concepts ACE (Access Control Entry): An individual permission entry within an ACL. DACL (Discretionary ACL): Defines who has what access to an object. SACL (System ACL): Used for auditing access attempts.  Security RisksMisconfigured ACLs can lead to privilege escalation, such as “GenericAll” or “WriteDacl” permissions granted to low-privilege users. </div></div></div></a><a class="pagination-related" href="/ouhboy/2026/01/11/Aws/" title="AWS Security"><img class="cover" src="/ouhboy/images/aws.png" onerror="onerror=null;src='/ouhboy/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">AWS Security</div></div><div class="info-2"><div class="info-item-1">AWS Security Before we do anything else, let’s start at the absolute beginning with Identity. AWS Identity BasicsAccount – Your Primary Security BoundaryAn AWS account is an isolated container for resources, billing, and identity roots. Nothing inside one account is reachable from another, unless you create an explicit bridge (VPC peering, cross‑account role, etc.). An account is where you will be able to run infrastructure like EC2s, Lambdas, Containers DBs, etc. It’s always needed to create...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/ouhboy/2023/08/09/ad-credential-enumeration-md/" title="AD CRED ENUM"><img class="cover" src="/ouhboy/images/darkbasin.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-09</div><div class="info-item-2">AD CRED ENUM</div></div><div class="info-2"><div class="info-item-1"> Credential EnumerationAfter acquiring a foothold, you must dig deeper using the low-privilege domain user credentials. Information to be interested in when enumerating:  Domain users Computer Attributes group membership Group Policy Objects Permissions ACLs Trusts  Most of these tools will not work without domain users’ credentials at any permission level. So at a minimum, you need to have acquired a user’s cleartext password, NTLM password hash or SYSTEM access on a domain-joined host. Crac...</div></div></div></a><a class="pagination-related" href="/ouhboy/2024/01/04/acls/" title="ACL AD"><img class="cover" src="/ouhboy/images/access.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-04</div><div class="info-item-2">ACL AD</div></div><div class="info-2"><div class="info-item-1">Active Directory ACLsAccess Control Lists (ACLs) define the permissions for objects within Active Directory. Key Concepts ACE (Access Control Entry): An individual permission entry within an ACL. DACL (Discretionary ACL): Defines who has what access to an object. SACL (System ACL): Used for auditing access attempts.  Security RisksMisconfigured ACLs can lead to privilege escalation, such as “GenericAll” or “WriteDacl” permissions granted to low-privilege users. </div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/ouhboy/images/cyber.png" onerror="this.onerror=null;this.src='/ouhboy/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">malw0re</div><div class="author-info-description">Cybersecurity, CTFs</div><div class="site-data"><a href="/ouhboy/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/ouhboy/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/ouhboy/categories/"><div class="headline">Categories</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/malw0re"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/MALW0RE" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://www.linkedin.com/in/karanja-brian/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://www.x.com/M4LW0R3" target="_blank" title="Instagram"><i class="fab fa-twitter" style="color: #cd486b;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my blog where I post my writeups from Boxes & CTFs along with exploit research!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kerberoasting"><span class="toc-number">1.</span> <span class="toc-text">Kerberoasting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#How-Kerb-Auth-works"><span class="toc-number">1.1.</span> <span class="toc-text">How Kerb Auth works!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SPNs"><span class="toc-number">2.</span> <span class="toc-text">SPNs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SPNS-syntax"><span class="toc-number">2.1.</span> <span class="toc-text">SPNS syntax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Type-of-SPN"><span class="toc-number">2.2.</span> <span class="toc-text">Type of SPN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-Perspective"><span class="toc-number">2.3.</span> <span class="toc-text">Linux Perspective</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Attack-Procedure"><span class="toc-number">2.3.1.</span> <span class="toc-text">Attack Procedure.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tools"><span class="toc-number">2.3.2.</span> <span class="toc-text">Tools.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-efficiency-of-Attack"><span class="toc-number">2.3.3.</span> <span class="toc-text">The efficiency of Attack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GetUserSPNs-py"><span class="toc-number">2.3.4.</span> <span class="toc-text">GetUserSPNs.py</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Requesting-all-TGS-tickets"><span class="toc-number">2.3.5.</span> <span class="toc-text">Requesting all TGS tickets.**</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Requesting-a-Single-TGS-Ticket"><span class="toc-number">2.3.6.</span> <span class="toc-text">Requesting a Single TGS Ticket.</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-Perspective"><span class="toc-number">2.4.</span> <span class="toc-text">Windows Perspective</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Enumerating-SPNs-with-setspn-exe"><span class="toc-number">2.4.1.</span> <span class="toc-text">Enumerating SPNs with setspn.exe</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Retrieving-All-Tickets-using-setspn-exe"><span class="toc-number">2.4.2.</span> <span class="toc-text">Retrieving All Tickets using setspn.exe</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Targeting-a-Single-User"><span class="toc-number">2.4.3.</span> <span class="toc-text">Targeting a Single User**************</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2026/02/01/Facts/" title="Facts HTB"><img src="/ouhboy/images/fact.webp" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="Facts HTB"/></a><div class="content"><a class="title" href="/ouhboy/2026/02/01/Facts/" title="Facts HTB">Facts HTB</a><time datetime="2026-01-31T23:38:46.000Z" title="Created 2026-02-01 02:38:46">2026-02-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2026/01/18/Azure/" title="Azure Security"><img src="/ouhboy/images/azure.jpeg" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="Azure Security"/></a><div class="content"><a class="title" href="/ouhboy/2026/01/18/Azure/" title="Azure Security">Azure Security</a><time datetime="2026-01-18T09:44:04.000Z" title="Created 2026-01-18 12:44:04">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2026/01/11/Aws/" title="AWS Security"><img src="/ouhboy/images/aws.png" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="AWS Security"/></a><div class="content"><a class="title" href="/ouhboy/2026/01/11/Aws/" title="AWS Security">AWS Security</a><time datetime="2026-01-11T09:44:04.000Z" title="Created 2026-01-11 12:44:04">2026-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2024/07/13/kerberos-101/" title="Kerberos"><img src="/ouhboy/images/kerb.webp" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="Kerberos"/></a><div class="content"><a class="title" href="/ouhboy/2024/07/13/kerberos-101/" title="Kerberos">Kerberos</a><time datetime="2024-07-12T21:00:00.000Z" title="Created 2024-07-13 00:00:00">2024-07-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ouhboy/2024/01/04/acls/" title="ACL AD"><img src="/ouhboy/images/access.jpg" onerror="this.onerror=null;this.src='/ouhboy/img/404.jpg'" alt="ACL AD"/></a><div class="content"><a class="title" href="/ouhboy/2024/01/04/acls/" title="ACL AD">ACL AD</a><time datetime="2024-01-03T21:00:00.000Z" title="Created 2024-01-04 00:00:00">2024-01-04</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;Since 100 BC - 2026 By malw0re</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/ouhboy/js/utils.js?v=5.5.3"></script><script src="/ouhboy/js/main.js?v=5.5.3"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-show-text.min.js" data-mobile="false" data-text="getsystem,sudo rm -rf,root,administrator,havoc,sliver,cobalt strike,python,c#,daz,empire,( ͡° ͜ʖ ͡°)" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
