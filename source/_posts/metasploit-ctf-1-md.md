@@ -6,8 +6,7 @@ tags:
   - Metasploit-ctf
 categories:
   - writeups
-top_img: /ouhboy/images/cyberpunk-red.png
-cover: https://malw0re.github.io/ouhboy/images/msf.jpg
+top_img: /images/cyberpunk-red.png
 description: Metasploit ctf series
 ---
 

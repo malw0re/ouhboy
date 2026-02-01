@@ -8,7 +8,7 @@ tags:
 categories: writeups
 keywords: 'HTB'
 top_img: /images/cyberpunk-red.png
-cover: /images/facts.webp
+cover: /images/fact.jpg
 ---
 # Facts HTB (Season 10)
 
