@@ -70,6 +70,10 @@ default_category: uncategorized
 category_map:
 tag_map:
 
+#sitemaps
+sitemap:
+  path: sitemap.xml
+
 # Metadata elements
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
 meta_generator: true
