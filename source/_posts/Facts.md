@@ -1,5 +1,5 @@
 ---
-title: Facts HTB 
+title: Facts HTB Writeup
 date: 2026-02-01 02:38:46
 tags:
   - Linux
