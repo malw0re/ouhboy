@@ -2,13 +2,13 @@
 title: Facts HTB Writeup
 date: 2026-02-01 02:38:46
 tags:
-  - Linux
+  - Linux security
   - LFI
-  - HTB
+  - Hackthebox
 categories: writeups
 keywords: 'HTB'
-top_img: /images/cyberpunk-red.png
-cover: /images/fact.jpg
+top_img: images/cyberpunk-red.png
+cover: images/fact.jpg
 ---
 # Facts HTB (Season 10)
 
