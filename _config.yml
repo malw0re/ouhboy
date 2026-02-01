@@ -14,6 +14,8 @@ timezone: Africa/Nairobi
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://malw0re.github.io/ouhboy
 root: /ouhboy/
+sitemap:
+  path: sitemap.xml 
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -33,7 +35,7 @@ skip_render:
 # Writing
 new_post_name: :title.md # File name of new posts
 default_layout: post
-top_img: /images/cyberpunk-red.png
+top_img: images/cyberpunk-red.png
 titlecase: false # Transform title into titlecase
 external_link:
   enable: true # Open external links in new tab
@@ -71,8 +73,7 @@ category_map:
 tag_map:
 
 #sitemaps
-sitemap:
-  path: sitemap.xml
+
 
 # Metadata elements
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
