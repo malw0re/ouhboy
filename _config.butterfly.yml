@@ -591,10 +591,9 @@ google_adsense:
 # --------------------------------------
 
 site_verification:
-  # - name: google-site-verification
-  #   content: xxxxxx
-  # - name: baidu-site-verification
-  #   content: xxxxxxx
+  - name: google-site-verification
+    content: rlAytyL_0DZIdaeKciunM68sC0ovsRtNWdw3kMCtTFE
+
 
 # Beautify/Effect (美化/效果)
 # --------------------------------------
