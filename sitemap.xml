@@ -147,7 +147,21 @@
   </url>
   
   <url>
+    <loc>https://malw0re.github.io/ouhboy/tags/Linux-security/</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://malw0re.github.io/ouhboy/tags/LFI/</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://malw0re.github.io/ouhboy/tags/Hackthebox/</loc>
     <lastmod>2026-02-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -183,20 +197,6 @@
   
   <url>
     <loc>https://malw0re.github.io/ouhboy/tags/Metasploit-ctf/</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://malw0re.github.io/ouhboy/tags/Linux-security/</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://malw0re.github.io/ouhboy/tags/Hackthebox/</loc>
     <lastmod>2026-02-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
