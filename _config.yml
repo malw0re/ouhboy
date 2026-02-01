@@ -103,5 +103,5 @@ theme: butterfly
 deploy:
   type: git
   repo: https://github.com/malw0re/ouhboy.git
-  branch: main
+  branch: gh-pages
   force: true
