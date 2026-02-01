@@ -2,11 +2,14 @@
 title: Facts HTB Writeup
 date: 2026-02-01 02:38:46
 tags:
-  - Linux security
+  - HackTheBox
+  - HTB
+  - Facts
   - LFI
-  - Hackthebox
-categories: writeups
-keywords: 'HTB'
+  - Privilege Escalation
+categories:
+  - Writeups
+description: Detailed walkthrough for the Facts machine on HackTheBox. Learn how to exploit LFI, bypass filters, and escalate privileges to root.
 top_img: images/cyberpunk-red.png
 cover: images/facts.jpg
 ---
